@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+<script th:src="@{/scripts/jquery.min.js}"></script>
+<script th:src="@{/scripts/bootstrap.min.js}"></script>
+<title></title>
+
+
+</head>
+
+<body>
+
+    <div class="container">
+    	<form action="#" th:action="@{/mainService/findNowPrize}"  method="post">
+		  <div>
+		  	<input type="hidden" name="mainID" th:value="${mainID}"/>
+    		<input type="submit" value="查詢最新中獎紀錄"/>
+    	</div>
+    	</form>
+    	<form action="#" th:action="@{/mainService/findAllPrize}"  method="post">
+    	<div>
+    		<input type="submit" value="查詢今日歷史中獎紀錄"/>
+    	</div>
+		</form>
+		<form action="#" th:action="@{/mainService/deletePrize}"  method="post">
+		  <div>
+    		<input type="submit" value="重新抽獎"/>
+    	</div>
+		</form>
+    <div id="prizeTable">
+    	
+    	
+    </div>
+
+    </div>
+    
+    <script th:src="@{/scripts/main.js}"></script>
+    <script th:src="@{/scripts/jquery.min.js}"></script>
+</body>
+<script th:inline="javascript">
+	var winnerList = [[${winnerList}]] ;
+	console.log(winnerList.length);
+	var prizeList = ""
+	
+		for (let i = 0; i < winnerList.length; i++) {
+			var data = winnerList[i];
+			prizeList=prizeList+'<div>'+
+	        '<h1>'+data.prize+'等獎</h1>'+
+	        '</div>'+
+	        '<div>'+
+	        '<h1>中獎名單</h1>'+
+	        '<div>'+data.people+'</div>'+
+	        '</div>'
+		}
+	$('#prizeTable').html(prizeList);
+	
+</script>
+</html>

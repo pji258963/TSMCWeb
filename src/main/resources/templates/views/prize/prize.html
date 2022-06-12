@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+<script th:src="@{/scripts/jquery.min.js}"></script>
+<script th:src="@{/scripts/bootstrap.min.js}"></script>
+<script th:src="@{/scripts/prize.js}"></script>
+<title></title>
+
+
+</head>
+
+
+<body>
+
+    <div  class="container">
+    	
+    	<form id="mainPrize" action="#" th:action="@{/mainService/doRandomWinner}"  method="post">
+    	<div>
+    		<div>剩餘 [[${currentPeople}]] 人</div>
+    	</div>
+		  <div>
+    		<div>[[${totalPrize}]]等獎</div>
+    		<input type="hidden" name="prizeName" th:value="${totalPrize}" ></input>
+    	</div>
+    	<div>
+    		<div>人數</div>
+    		<input name="prizePeople"></input>
+    	</div>
+    	<div>
+    		<input type="submit" value="抽獎">
+    	</div>
+		  
+		</form>
+    	
+    	
+
+    </div>
+    
+    
+    
+</body>
+
+<script th:inline="javascript">
+
+    var totalPeople = [[${totalPeople}]] ;
+    var totalPrize = [[${totalPrize}]] ;
+//     var prize = createMainPrize(totalPrize);
+//     $('#mainPrize').append(prize);
+
+</script>
+</html>

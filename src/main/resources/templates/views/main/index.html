@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+<script th:src="@{/scripts/main.js}"></script>
+<script th:src="@{/scripts/jquery.min.js}"></script>
+<script th:src="@{/scripts/bootstrap.min.js}"></script>
+<title></title>
+
+
+</head>
+
+<body>
+
+    <div class="container">
+    	<form action="#" th:action="@{/mainService/createPrize}"  method="post">
+		  <div>
+    		<div>中獎總人數</div>
+    		<input id=people name="totalPeople" value="60000"></input>
+    	</div>
+    	<div>
+    		<div>獎項</div>
+    		<input id='prize' name="totalPrize" value="10"></input>
+    	</div>
+    	<div>
+    		<input type="submit" value="開始抽獎" />
+    	</div>
+		  
+		</form>
+    	
+
+    </div>
+    
+    
+</body>
+<script></script>
+</html>
