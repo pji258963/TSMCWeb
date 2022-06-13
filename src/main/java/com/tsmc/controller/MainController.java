@@ -49,7 +49,7 @@ public class MainController {
 	@PostMapping("/doRandomWinner")
 	public ModelAndView randomWinner(@ModelAttribute PrizePeopleModel prizePeopleModel, Model model, HttpServletRequest request) {
 		ModelAndView modelAndView = new ModelAndView("views/findPrize/findPrize");
-		if (Integer.parseInt(prizePeopleModel.getPrizeName())<2) {
+		if (Integer.parseInt(prizePeopleModel.getPrizeName())<2 || prizePeopleModel.getCurrentPeople().trim().equals(prizePeopleModel.getPrizePeople().trim())) {
 			modelAndView.setViewName("views/findPrize/findPrize");
 		}else {
 			modelAndView.setViewName("views/prize/prize");

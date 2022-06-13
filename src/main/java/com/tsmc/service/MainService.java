@@ -1,11 +1,10 @@
 package com.tsmc.service;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
@@ -15,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.tsmc.entity.MainForWinnerEntity;
 import com.tsmc.entity.WinnerListEntiry;
+import com.tsmc.model.DoRandomPeopleForWinnerModel;
 import com.tsmc.model.FindNowPrizeModel;
 import com.tsmc.model.PrizePeopleModel;
 import com.tsmc.model.RandomWinnerModel;
@@ -44,7 +44,7 @@ public class MainService {
 	}
 	
 	public RandomWinnerModel doRandomWinner(PrizePeopleModel prizePeopleModel,HttpSession httpSession){
-		HashSet<Integer> prizePeopleSet = new HashSet<Integer>();
+		ArrayList<String> prizePeopleArrayList = new ArrayList<String>();
 		WinnerListEntiry wiinListEntiry = new WinnerListEntiry();
 		RandomWinnerModel randomWinnerModel = new RandomWinnerModel();
 		MainForWinnerEntity mainForWinnerEntity = mainRepository.findByDate(Util.getFormatToday());
@@ -57,27 +57,23 @@ public class MainService {
 			mainForWinnerEntity.setTotalSet(mainForWinnerEntity.getTotalSet().replace("[", "").replace("]", ""));
 			HashSet<String> tempSet = new  HashSet<String>();
 			tempSet.addAll(Arrays.asList(mainForWinnerEntity.getTotalSet().trim().split(",")));
-			HashSet<Integer> totalHashSet = new  HashSet<Integer>();
-			totalHashSet = (HashSet<Integer>) tempSet.stream().map(s -> Integer.parseInt(s.trim())).collect(Collectors.toSet());
-			prizePeopleSet.addAll(totalHashSet);
+			HashSet<String> totalHashSet = new  HashSet<String>();
+			totalHashSet =  (HashSet<String>) tempSet.stream().map(s -> s.trim()).collect(Collectors.toSet()); 
 			
-			totalHashSet = randomSet(1,totalPeople,prizePeople+totalHashSet.size() ,totalHashSet);
-			HashSet<Integer> finalHashSet = new HashSet<Integer>();
-			finalHashSet.addAll(totalHashSet);
+			prizePeopleArrayList.addAll(totalHashSet);
+			log.info("prizePeopleArrayList Size:{}",prizePeopleArrayList.size());
 			
-			
-			mainRepository.upDatePeopleAndCurrentPoppleByDate(finalHashSet.toString(), String.valueOf(currentPeople), Util.getFormatToday());
-			
-			
-			totalHashSet.removeAll(prizePeopleSet);
-			wiinListEntiry.setPeople(totalHashSet.toString());
+			DoRandomPeopleForWinnerModel doRandomPeopleForWinnerModel = doRandomPeopleForWinner(prizePeopleArrayList,prizePeople);
+			mainRepository.upDatePeopleAndCurrentPoppleByDate(doRandomPeopleForWinnerModel.getTotalPeopleArrayList().toString(), String.valueOf(currentPeople), Util.getFormatToday());
+			wiinListEntiry.setPeople(doRandomPeopleForWinnerModel.getWinPeopleSet().toString());
 			
 		}else {
-			HashSet<Integer> totalHashSet = new HashSet<Integer>();
-			prizePeopleSet = randomSet(1,totalPeople,prizePeople ,totalHashSet);
-			wiinListEntiry.setPeople(prizePeopleSet.toString());
+
+			ArrayList<String> totalPeopleArrayList = createPeopleArray(totalPeople);
+			DoRandomPeopleForWinnerModel doRandomPeopleForWinnerModel = doRandomPeopleForWinner(totalPeopleArrayList,prizePeople);
+			wiinListEntiry.setPeople(doRandomPeopleForWinnerModel.getWinPeopleSet().toString());
 			
-			mainRepository.upDatePeopleAndCurrentPoppleByDate(prizePeopleSet.toString(), String.valueOf(currentPeople), Util.getFormatToday());
+			mainRepository.upDatePeopleAndCurrentPoppleByDate(doRandomPeopleForWinnerModel.getTotalPeopleArrayList().toString(), String.valueOf(currentPeople), Util.getFormatToday());
 		}
 		
 		wiinListEntiry.setMainId(mainForWinnerEntity.getId());
@@ -93,6 +89,24 @@ public class MainService {
 		return randomWinnerModel;
 	}
 	
+	private DoRandomPeopleForWinnerModel doRandomPeopleForWinner(ArrayList<String> totalPeopleArrayList, int prizePeople) {
+		HashSet<String> winPeopleSet = new HashSet<String>();
+		DoRandomPeopleForWinnerModel doRandomPeopleForWinnerModel = new DoRandomPeopleForWinnerModel();
+		for (int i = 0; i < prizePeople; i++) {
+			int index = new Random().nextInt(totalPeopleArrayList.size());
+			String winPeople = totalPeopleArrayList.get(index);
+			totalPeopleArrayList.remove(index);
+			winPeopleSet.add(winPeople);
+		}
+		log.info("totalPeopleArrayList Size:{}",totalPeopleArrayList.size());
+		log.info("winPeopleSet Size:{}",winPeopleSet.size());
+		
+		doRandomPeopleForWinnerModel.setTotalPeopleArrayList(totalPeopleArrayList);
+		doRandomPeopleForWinnerModel.setWinPeopleSet(winPeopleSet);
+		
+		return doRandomPeopleForWinnerModel;
+	}
+
 	public List<WinnerListEntiry> findPrize(FindNowPrizeModel findNowPrizeModel) {
 		MainForWinnerEntity mainForWinnerEntity = mainRepository.findByDate(Util.getFormatToday());
 		return winnerListRepository.getWinnerListByDate(Util.getFormatToday(),String.valueOf(mainForWinnerEntity.getId()));
@@ -102,12 +116,13 @@ public class MainService {
 		winnerListRepository.deleteByDate(com.tsmc.util.Util.getFormatToday());
 	}
 	
-	private  HashSet<Integer> randomSet(int min, int max, int prizePeople, HashSet<Integer> totalHashSet) { 
-		while (totalHashSet.size() < prizePeople ) {
-		int num = (int) (Math.random() * (max - min))*min; 
-		totalHashSet.add(num);
+	private  ArrayList<String> createPeopleArray(int totalPeople) {
+		ArrayList<String> peopleArrayList = new ArrayList<String>();
+		for (int i = 1; i <= totalPeople; i++) {
+			peopleArrayList.add(String.valueOf(i));
 		}
-		return totalHashSet;	
+		
+		return peopleArrayList;
 	}
 
 	public List<WinnerListEntiry> findAllPrize() {

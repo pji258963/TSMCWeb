@@ -25,6 +25,7 @@
     	<form id="mainPrize" action="#" th:action="@{/mainService/doRandomWinner}"  method="post">
     	<div>
     		<div>剩餘 [[${currentPeople}]] 人</div>
+    		<input type="hidden" name="currentPeople" th:value="${currentPeople}" ></input>
     	</div>
 		  <div>
     		<div>[[${totalPrize}]]等獎</div>
@@ -32,10 +33,10 @@
     	</div>
     	<div>
     		<div>人數</div>
-    		<input name="prizePeople"></input>
+    		<input name="prizePeople" id="prizePeople"></input>
     	</div>
     	<div>
-    		<input type="submit" value="抽獎">
+    		<input type="submit" value="抽獎" onclick="return checkPeople()">
     	</div>
 		  
 		</form>
@@ -50,10 +51,17 @@
 
 <script th:inline="javascript">
 
-    var totalPeople = [[${totalPeople}]] ;
-    var totalPrize = [[${totalPrize}]] ;
-//     var prize = createMainPrize(totalPrize);
-//     $('#mainPrize').append(prize);
+   function checkPeople(){
+	   var prizePeople = $("#prizePeople").val();
+	   var currentPeople = [[${currentPeople}]]
+	   if(prizePeople>currentPeople){
+		   alert("輸入人數過多")
+		   return false;
+	   }
+	   
+	   
+	   return true; 
+   }
 
 </script>
 </html>
