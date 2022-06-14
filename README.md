@@ -11,7 +11,8 @@
 
    ![image](https://user-images.githubusercontent.com/12302993/173503449-513deff4-5075-4f0d-b418-a3d0690e56ce.png)
    ![image](https://user-images.githubusercontent.com/12302993/173503466-3c28c7f9-d848-4455-862d-0bd4b26712bb.png)
-   ![image](https://user-images.githubusercontent.com/12302993/173503482-e8fe8f7d-e867-4238-ab15-815ccf57b85e.png)
+   ![image](https://user-images.githubusercontent.com/12302993/173508352-1a374285-263c-496e-ba2b-13855f9b174b.png)
+
 
 4.	抽獎結束，依據需求選擇”查詢最新(此次)抽獎紀錄”、”歷史今日中獎記錄”或”重新抽獎”
 
@@ -19,7 +20,7 @@
 
 5.	查詢最新(此次)抽獎紀錄
 
-   ![image](https://user-images.githubusercontent.com/12302993/173503629-785228bc-540d-4baa-9304-7ca9db179bd9.png)
+![image](https://user-images.githubusercontent.com/12302993/173508320-2d258659-c1cd-4cf4-980a-4b7dfdbe8f64.png)
 
 6. 查詢歷史中獎記錄
 
