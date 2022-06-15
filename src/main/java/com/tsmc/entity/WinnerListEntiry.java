@@ -1,7 +1,5 @@
 package com.tsmc.entity;
 
-import java.sql.Clob;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

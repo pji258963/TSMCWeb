@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-Hant-TW" xmlns:th="http://www.thymeleaf.org">
-
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -13,16 +11,11 @@
 <script th:src="@{/scripts/bootstrap.min.js}"></script>
 <script th:src="@{/scripts/prize.js}"></script>
 <title></title>
-
-
 </head>
 
-
 <body>
-
     <div  class="container">
-    	
-    	<form id="mainPrize" action="#" th:action="@{/mainService/doRandomWinner}"  method="post">
+   	  	<form id="mainPrize" action="#" th:action="@{/mainService/doRandomWinner}"  method="post">
     	<div>
     		<div>剩餘 [[${currentPeople}]] 人</div>
     		<input type="hidden" name="currentPeople" th:value="${currentPeople}" ></input>
@@ -37,31 +30,9 @@
     	</div>
     	<div>
     		<input type="submit" value="抽獎" onclick="return checkPeople()">
-    	</div>
-		  
+    	</div>		  
 		</form>
-    	
-    	
-
-    </div>
-    
-    
-    
+    </div>   
 </body>
 
-<script th:inline="javascript">
-
-   function checkPeople(){
-	   var prizePeople = $("#prizePeople").val();
-	   var currentPeople = [[${currentPeople}]]
-	   if(prizePeople>currentPeople){
-		   alert("輸入人數過多")
-		   return false;
-	   }
-	   
-	   
-	   return true; 
-   }
-
-</script>
 </html>

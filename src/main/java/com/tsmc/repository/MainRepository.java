@@ -22,7 +22,7 @@ public interface MainRepository extends JpaRepository<MainForWinnerEntity,Long>{
 	
 	@Modifying
 	@Query(value = "UPDATE  MAIN_FOR_WINNER SET TOTAL_SET=?1 , CURRENT_PEOPLE=?2  WHERE WINNG_DATE = ?3 AND ID= (SELECT MAX(ID) FROM  MAIN_FOR_WINNER  WHERE WINNG_DATE = ?3)", nativeQuery = true)
-	void upDatePeopleAndCurrentPoppleByDate(String totalSet, String currentPoeple,String today);
+	void updatePeopleAndCurrentPoppleByDate(String totalSet, String currentPoeple,String today);
 	
 	@Query(value = "SELECT * FROM  MAIN_FOR_WINNER  WHERE WINNG_DATE = ?1  AND ID= (SELECT MAX(ID) FROM  MAIN_FOR_WINNER  WHERE WINNG_DATE = ?1) ", nativeQuery = true)
 	MainForWinnerEntity findByDate(String today);
